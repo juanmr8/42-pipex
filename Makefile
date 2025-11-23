@@ -12,7 +12,9 @@ LIB_DIR = lib
 LIBFT_DIR = $(LIB_DIR)/libft
 LIBFT = $(LIBFT_DIR)/libft.a
 SRCS = $(SRC_DIR)/main.c \
-    #    $(SRC_DIR)/pipex.c
+	$(SRC_DIR)/command.c \
+	$(SRC_DIR)/utils.c \
+	
 OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 all: $(NAME)
