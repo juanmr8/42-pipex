@@ -6,11 +6,12 @@
 /*   By: jmora-ro <jmora-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/23 12:40:28 by jmora-ro          #+#    #+#             */
-/*   Updated: 2025/11/23 15:11:44 by jmora-ro         ###   ########.fr       */
+/*   Updated: 2025/11/24 13:50:25 by jmora-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/pipex.h"
+#include <stdlib.h>
 
 static char	*check_path_dir(char *dir, char *cmd)
 {
@@ -20,7 +21,7 @@ static char	*check_path_dir(char *dir, char *cmd)
 	temp = ft_strjoin(dir, "/");
 	full_path = ft_strjoin(temp, cmd);
 	free(temp);
-	if (access(full_path, X_OK) == 0)
+	if (access(full_path, F_OK) == 0)
 		return (full_path);
 	free(full_path);
 	return (NULL);
@@ -72,9 +73,7 @@ char	*get_path_from_envp(char **envp)
 	while (envp[i])
 	{
 		if (ft_strncmp(envp[i], "PATH=", 5) == 0)
-		{
 			return (envp[i] + 5);
-		}
 		i++;
 	}
 	return (NULL);
@@ -89,16 +88,18 @@ void	execute_command(char *cmd, char **envp)
 	if (!args)
 	{
 		perror("parse_command failed");
-		exit(1);
+		exit(EXIT_FAILURE);
 	}
 	path = find_command_path(args[0], envp);
 	if (!path)
 	{
-		perror("command not found");
 		free_split(args);
-		exit(1);
+		perror("command not found");
+		exit(127);
 	}
 	execve(path, args, envp);
 	perror("execve failed");
-	exit(1);
+	free_split(args);
+	free(path);
+	exit(EXIT_FAILURE);
 }
