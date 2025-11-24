@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmora-ro <jmora-ro@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: jmora-ro <jmora-ro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/16 11:55:38 by jmora-ro          #+#    #+#             */
-/*   Updated: 2025/11/24 15:09:49 by jmora-ro         ###   ########.fr       */
+/*   Updated: 2025/11/24 16:09:55 by jmora-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,14 @@
 # define PIPEX_H
 
 # include "../lib/libft/libft.h"
-# include <fcntl.h>
+# include <unistd.h>
 # include <stdio.h>
-# include <sys/_types/_pid_t.h>
+# include <sys/types.h>
+# include <sys/wait.h>
+# include<sys/types.h>
+# include<sys/stat.h>
+# include <fcntl.h>
+# include <stdlib.h>
 
 void	handle_exit(void);
 char	**parse_command(char *cmd_string);

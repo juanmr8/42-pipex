@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   command.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmora-ro <jmora-ro@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: jmora-ro <jmora-ro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/23 12:40:28 by jmora-ro          #+#    #+#             */
-/*   Updated: 2025/11/24 13:50:25 by jmora-ro         ###   ########.fr       */
+/*   Updated: 2025/11/24 16:29:01 by jmora-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/pipex.h"
-#include <stdlib.h>
 
 static char	*check_path_dir(char *dir, char *cmd)
 {
@@ -84,6 +83,11 @@ void	execute_command(char *cmd, char **envp)
 	char	**args;
 	char	*path;
 
+	if (!cmd || !*cmd)
+	{
+		ft_putstr_fd("pipex: command not found: \n", 2);
+		exit(127);
+	}
 	args = parse_command(cmd);
 	if (!args)
 	{
