@@ -6,7 +6,7 @@
 /*   By: jmora-ro <jmora-ro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/16 11:55:38 by jmora-ro          #+#    #+#             */
-/*   Updated: 2025/11/24 16:09:55 by jmora-ro         ###   ########.fr       */
+/*   Updated: 2025/11/24 16:49:46 by jmora-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 # include <stdio.h>
 # include <sys/types.h>
 # include <sys/wait.h>
-# include<sys/types.h>
-# include<sys/stat.h>
+# include <sys/types.h>
+# include <sys/stat.h>
 # include <fcntl.h>
 # include <stdlib.h>
 

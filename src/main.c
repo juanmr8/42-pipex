@@ -6,7 +6,7 @@
 /*   By: jmora-ro <jmora-ro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/16 12:05:19 by jmora-ro          #+#    #+#             */
-/*   Updated: 2025/11/24 16:44:34 by jmora-ro         ###   ########.fr       */
+/*   Updated: 2025/11/25 11:33:09 by jmora-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	main(int argc, char **argv, char **envp)
 		init_child2(p_fd, argv, envp);
 	close(p_fd[0]);
 	close(p_fd[1]);
-	waitpid(pid1, NULL, 0);
+	waitpid(pid1, &status, 0);
 	waitpid(pid2, &status, 0);
 	return (status >> 8);
 }

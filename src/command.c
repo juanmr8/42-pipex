@@ -6,16 +6,16 @@
 /*   By: jmora-ro <jmora-ro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/23 12:40:28 by jmora-ro          #+#    #+#             */
-/*   Updated: 2025/11/24 16:29:01 by jmora-ro         ###   ########.fr       */
+/*   Updated: 2025/11/25 11:31:35 by jmora-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/pipex.h"
 
-static char	*check_path_dir(char *dir, char *cmd)
+static char *check_path_dir(char *dir, char *cmd)
 {
-	char	*temp;
-	char	*full_path;
+	char *temp;
+	char *full_path;
 
 	temp = ft_strjoin(dir, "/");
 	full_path = ft_strjoin(temp, cmd);
@@ -26,12 +26,12 @@ static char	*check_path_dir(char *dir, char *cmd)
 	return (NULL);
 }
 
-char	*find_command_path(char *cmd, char **envp)
+char *find_command_path(char *cmd, char **envp)
 {
-	char	*path_env;
-	char	**paths;
-	char	*result;
-	int		i;
+	char *path_env;
+	char **paths;
+	char *result;
+	int i;
 
 	path_env = get_path_from_envp(envp);
 	if (!path_env)
@@ -54,9 +54,9 @@ char	*find_command_path(char *cmd, char **envp)
 	return (NULL);
 }
 
-char	**parse_command(char *cmd_string)
+char **parse_command(char *cmd_string)
 {
-	char	**args;
+	char **args;
 
 	args = ft_split(cmd_string, ' ');
 	if (!args)
@@ -64,9 +64,9 @@ char	**parse_command(char *cmd_string)
 	return (args);
 }
 
-char	*get_path_from_envp(char **envp)
+char *get_path_from_envp(char **envp)
 {
-	int		i;
+	int i;
 
 	i = 0;
 	while (envp[i])
@@ -78,10 +78,10 @@ char	*get_path_from_envp(char **envp)
 	return (NULL);
 }
 
-void	execute_command(char *cmd, char **envp)
+void execute_command(char *cmd, char **envp)
 {
-	char	**args;
-	char	*path;
+	char **args;
+	char *path;
 
 	if (!cmd || !*cmd)
 	{
