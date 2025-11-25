@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   command.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmora-ro <jmora-ro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmora-ro <jmora-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/23 12:40:28 by jmora-ro          #+#    #+#             */
-/*   Updated: 2025/11/25 11:31:35 by jmora-ro         ###   ########.fr       */
+/*   Updated: 2025/11/25 12:30:59 by jmora-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/pipex.h"
 
-static char *check_path_dir(char *dir, char *cmd)
+static char	*check_path_dir(char *dir, char *cmd)
 {
-	char *temp;
-	char *full_path;
+	char	*temp;
+	char	*full_path;
 
 	temp = ft_strjoin(dir, "/");
 	full_path = ft_strjoin(temp, cmd);
@@ -26,12 +26,12 @@ static char *check_path_dir(char *dir, char *cmd)
 	return (NULL);
 }
 
-char *find_command_path(char *cmd, char **envp)
+char	*find_command_path(char *cmd, char **envp)
 {
-	char *path_env;
-	char **paths;
-	char *result;
-	int i;
+	char	*path_env;
+	char	**paths;
+	char	*result;
+	int		i;
 
 	path_env = get_path_from_envp(envp);
 	if (!path_env)
@@ -54,46 +54,19 @@ char *find_command_path(char *cmd, char **envp)
 	return (NULL);
 }
 
-char **parse_command(char *cmd_string)
+static void	validate_command(char *cmd)
 {
-	char **args;
-
-	args = ft_split(cmd_string, ' ');
-	if (!args)
-		return (NULL);
-	return (args);
-}
-
-char *get_path_from_envp(char **envp)
-{
-	int i;
-
-	i = 0;
-	while (envp[i])
-	{
-		if (ft_strncmp(envp[i], "PATH=", 5) == 0)
-			return (envp[i] + 5);
-		i++;
-	}
-	return (NULL);
-}
-
-void execute_command(char *cmd, char **envp)
-{
-	char **args;
-	char *path;
-
 	if (!cmd || !*cmd)
 	{
 		ft_putstr_fd("pipex: command not found: \n", 2);
 		exit(127);
 	}
-	args = parse_command(cmd);
-	if (!args)
-	{
-		perror("parse_command failed");
-		exit(EXIT_FAILURE);
-	}
+}
+
+static char	*get_command_path(char **args, char **envp)
+{
+	char	*path;
+
 	path = find_command_path(args[0], envp);
 	if (!path)
 	{
@@ -101,6 +74,22 @@ void execute_command(char *cmd, char **envp)
 		perror("command not found");
 		exit(127);
 	}
+	return (path);
+}
+
+void	execute_command(char *cmd, char **envp)
+{
+	char	**args;
+	char	*path;
+
+	validate_command(cmd);
+	args = parse_command(cmd);
+	if (!args)
+	{
+		perror("parse_command failed");
+		exit(EXIT_FAILURE);
+	}
+	path = get_command_path(args, envp);
 	execve(path, args, envp);
 	perror("execve failed");
 	free_split(args);

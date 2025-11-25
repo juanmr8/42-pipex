@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmora-ro <jmora-ro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmora-ro <jmora-ro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/16 12:05:19 by jmora-ro          #+#    #+#             */
-/*   Updated: 2025/11/25 11:33:09 by jmora-ro         ###   ########.fr       */
+/*   Updated: 2025/11/25 12:28:08 by jmora-ro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,23 @@ static void	init_pipe(int *p_fd)
 	}
 }
 
+static int	cleanup_and_wait(int *p_fd, pid_t pid1, pid_t pid2)
+{
+	int	status;
+
+	status = 0;
+	close(p_fd[0]);
+	close(p_fd[1]);
+	waitpid(pid1, &status, 0);
+	waitpid(pid2, &status, 0);
+	return (status >> 8);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	int		p_fd[2];
 	pid_t	pid1;
 	pid_t	pid2;
-	int		status;
 
 	if (argc != 5)
 	{
@@ -80,9 +91,5 @@ int	main(int argc, char **argv, char **envp)
 		handle_exit();
 	if (pid2 == 0)
 		init_child2(p_fd, argv, envp);
-	close(p_fd[0]);
-	close(p_fd[1]);
-	waitpid(pid1, &status, 0);
-	waitpid(pid2, &status, 0);
-	return (status >> 8);
+	return (cleanup_and_wait(p_fd, pid1, pid2));
 }
